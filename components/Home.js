@@ -26,16 +26,25 @@ export default class Home extends Component {
             ]
         }
     }
+
+    onDel (id) {
+        const {tasks} = this.state
+        const task = tasks.filter(value => value.id !== id)
+        this.setState({tasks:task})
+    }
     render() {
         const {tasks} = this.state
         
         return (
-            <View>
+           <React.Fragment>
+                <View style={{flex:1}}>
              {tasks.map(task => {
-                    return <Details key={task.id} title={task.title} content={task.content} />
+                    return <Details key={task.id} title={task.title} content={task.content} onDeleteHandler={this.onDel.bind(this,task.id)} />
                 })}
-                <Button onPress={()=> {Actions.Add()}}  title="get me to the add" />
             </View>
+                <Button onPress={()=> {Actions.Add()}}  title="get me to the add" />
+
+           </React.Fragment>
         )
     }
 }
